@@ -23,6 +23,14 @@ body {
   margin: 0px;
 }
 
+.hidden {
+  display: none;
+}
+
+.main-container {
+  position: relative;
+}
+
 .container--2 {
   width: 1450px;
   margin: 0px auto;
@@ -162,7 +170,7 @@ table tbody tr:last-child td:last-child {
 .carousel-btn {
   height: 32px;
   width: 32px;
-  background-color: #343a40;
+  background-color: #fff;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -173,7 +181,7 @@ table tbody tr:last-child td:last-child {
 }
 
 .carousel-btn:hover {
-  background-color: #fff;
+  background-color: #343a40;
 }
 
 .btn--left {
@@ -257,6 +265,10 @@ table tbody tr:last-child td:last-child {
   font-size: 16px;
   text-transform: uppercase;
 }
+.btn-side-nav:hover,
+.btn-side-nav:active {
+  color: #ced4da;
+}
 
 /* ICON */
 
@@ -276,4 +288,52 @@ aside nav a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* MODAL */
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 16px;
+  font-weight: 500px;
+  line-height: 1.8;
+  width: 400px;
+  background-color: #fff;
+  border: 2px solid #b197fc;
+  box-shadow: 0 0 20px 10px rgba(33, 37, 41, 0.153);
+  padding: 32px 64px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.overlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(33, 37, 41, 0.7);
+  z-index: 1;
+}
+
+.close-modal-btn {
+  position: absolute;
+  border: none;
+  background-color: #b197fc;
+  border-radius: 6px;
+  right: 6px;
+  top: 6px;
+}
+
+.close-modal-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.modal h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  line-height: 1.4;
 }

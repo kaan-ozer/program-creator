@@ -11,11 +11,11 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/CSS/style.css" />
     <title>Document</title>
   </head>
   <body>
-    <div>
+    <div class="main-container">
       <header class="flex">
         <h1 class="heading-header">Create Your Program</h1>
         <nav>
@@ -31,7 +31,7 @@
           <aside class="aside-menu">
             <div class="side-nav-background">
               <nav class="side-nav">
-                <a href="#" class="btn-side-nav">
+                <a href="#" class="btn-side-nav btn-add">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="icon"
@@ -194,5 +194,32 @@
 
       <footer></footer>
     </div>
+    <div class="modal hidden">
+      <button class="close-modal-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="close-modal-icon"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <h2>Fill the form to add a lecture, please.</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quisquam
+        praesentium at aut deserunt accusantium totam temporibus mollitia iusto
+        maxime. Rem tempora quos placeat perspiciatis laboriosam accusantium sed
+        optio voluptatem?
+      </p>
+    </div>
+    <div class="overlay hidden"></div>
+    <script src="assets/JS/script.js"></script>
   </body>
 </html>
