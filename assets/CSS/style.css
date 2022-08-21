@@ -184,13 +184,13 @@ table tbody tr:last-child td:last-child {
   background-color: #343a40;
 }
 
-.btn--left {
+.carousel-btn-left {
   top: 50%;
   left: 0px;
 
   transform: translate(-50%, -50%);
 }
-.btn--right {
+.carousel-btn-right {
   top: 50%;
   right: 0px;
 
@@ -318,6 +318,8 @@ aside nav a {
 }
 
 .close-modal-btn {
+  display: flex;
+  align-items: center;
   position: absolute;
   border: none;
   background-color: #b197fc;
@@ -335,5 +337,44 @@ aside nav a {
   font-size: 24px;
   margin-bottom: 24px;
   letter-spacing: -0.5px;
-  line-height: 1.4;
+  line-height: 1.3;
+}
+
+.modal h3 {
+  margin-bottom: 4px;
+  font-weight: 400px;
+  font-size: 18px;
+}
+
+.modal-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.lec-hour-input,
+.student-grade-input,
+.lec-status-input {
+  display: flex;
+  gap: 32px;
+}
+
+.modal-btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #b197fc;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #212529;
+  font-weight: 700;
+  width: 64px;
+  height: 32px;
+}
+
+.modal-btn-submit:hover,
+.close-modal-btn:hover {
+  color: #fff;
 }
