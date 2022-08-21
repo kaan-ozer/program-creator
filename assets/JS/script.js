@@ -1,6 +1,6 @@
 "use strict";
 
-// Elements
+// ELEMENTS *******************************************************
 
 const btnAdd = document.querySelector(".btn-add");
 const modal = document.querySelector(".modal");
@@ -9,13 +9,15 @@ const closeModalBtn = document.querySelector(".close-modal-btn");
 const carouselBtnRight = document.querySelector(".carousel-btn-right");
 const carouselBtnLeft = document.querySelector(".carousel-btn-left");
 
-// functions
+// FUNCTIONS *******************************************************
 
+//closing the modal
 const closeModal = function () {
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
 };
 
+//moving table via carousel buttons, just pass the direction into fuction
 const moveTable = function (direction) {
   let activeTable;
 
@@ -26,30 +28,46 @@ const moveTable = function (direction) {
       activeTable = i;
       // make hidden the active table
       document.querySelector(`.table-${i}`).classList.add("hidden");
+      //make hidden the dot
+      document.querySelector(`.dot-${i}`).classList.remove("dot-fill");
     }
   }
 
   if (direction === "right") {
-    // make visible the next table
+    // making visible the next table
     if (activeTable !== 4) {
+      //if it is not the last table, add 1 to active table and make visible the next table
       document
         .querySelector(`.table-${activeTable + 1}`)
         .classList.remove("hidden");
+      document
+        //if it is not the last dot, add 1 to active table and make visible the next dot
+        .querySelector(`.dot-${activeTable + 1}`)
+        .classList.add("dot-fill");
     } else {
+      //if it is  the last table, make visible the  table--1
       document.querySelector(`.table-${1}`).classList.remove("hidden");
+      //if it is  the last dot, make visible the  dot--1
+      document.querySelector(`.dot-${1}`).classList.add("dot-fill");
     }
   }
 
+  // make visible the next table for the left direction(same process)
   if (direction === "left")
     if (activeTable !== 1) {
-      // make visible the next table
       document
         .querySelector(`.table-${activeTable - 1}`)
         .classList.remove("hidden");
+      document
+        .querySelector(`.dot-${activeTable - 1}`)
+        .classList.add("dot-fill");
     } else {
       document.querySelector(`.table-${4}`).classList.remove("hidden");
+      document.querySelector(`.dot-${4}`).classList.add("dot-fill");
     }
 };
+
+// EVENT LİSTENERS  *******************************************************
 
 //if you push the add button which is on modal, modal will be visible
 btnAdd.addEventListener("click", function () {
