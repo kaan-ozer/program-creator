@@ -37,7 +37,7 @@ body {
 }
 
 /* GRİD LAYOUT */
-.grid-2-cols {
+.flex-2-cols {
   display: flex;
   align-items: stretch;
 
@@ -85,12 +85,13 @@ aside {
   background-color: white;
   width: 300px;
   height: 600px;
-  position: relative;
+
+  /* position: relative; */
 }
 
 .side-nav-background {
-  position: absolute;
-  left: 0;
+  /* position: absolute; */
+  /* left: 0; */
 
   background-color: #343a40;
   border-top-left-radius: 12px;
@@ -142,9 +143,6 @@ table th {
   font-size: 16px;
 }
 
-table tbody tr:nth-child(even) {
-  background-color: #ced4da;
-}
 table tbody tr:nth-child(odd) {
   background-color: #f8f9fa;
 }
@@ -297,7 +295,7 @@ aside nav a {
   left: 50%;
   top: 50%;
   font-size: 16px;
-  font-weight: 500px;
+  font-weight: 500;
   line-height: 1.8;
   width: 400px;
   background-color: #fff;
@@ -342,18 +340,19 @@ aside nav a {
 
 .modal h3 {
   margin-bottom: 4px;
-  font-weight: 400px;
+  font-weight: 500;
   font-size: 18px;
+  line-height: 1.3;
 }
 
 .modal-questions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
-.lec-hour-input,
+.lec-session-input,
 .student-grade-input,
 .lec-status-input {
   display: flex;
@@ -377,4 +376,34 @@ aside nav a {
 .modal-btn-submit:hover,
 .close-modal-btn:hover {
   color: #fff;
+}
+
+.lecture-divs {
+  overflow-y: scroll;
+  height: 542px;
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b197fc;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #212529;
 }
