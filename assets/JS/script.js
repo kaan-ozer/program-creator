@@ -244,6 +244,12 @@ function birak(o) {
   o.target.appendChild(document.getElementById(veri));
 }
 
+function del(o) {
+  o.preventDefault();
+  var veri = o.dataTransfer.getData("text");
+  document.getElementById(veri).remove();
+}
+
 btnFreshman.addEventListener("click", function () {
   bringLectures(1);
 });
