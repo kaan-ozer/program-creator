@@ -21,62 +21,25 @@ let hourStart = 7;
 
 // FUNCTIONS *******************************************************
 
-const bringLectures = function (tableNum) {
-  let table2El, activeTableTd;
-  let k;
-  let activeTableNum;
-
-  //create array for the json data
-  const table2Elements = [];
-
-  for (k = 1; k <= 4; k++) {
-    const table = document.querySelector(`.table-${k}`);
-
-    if (!table.classList.contains("hidden")) {
-      activeTableNum = k;
-      console.log("active", k);
-    }
-  }
-
-  for (let j = 1; j <= 10; j++) {
-    for (let f = 1; f <= 6; f++) {
-      // obtain the elements of table2
-      table2El = document.querySelector(
-        `.table-${tableNum}-row-${j}-column-${f}`
-      ).children;
-
-      //obtain the td areas of the active table
-      activeTableTd = document.querySelector(
-        `.table-${activeTableNum}-row-${j}-column-${f}`
-      );
-
-      //add elements from second table to the active table
-      if (table2El.length !== 0) {
-        for (let l = 0; l < table2El.length; l++) {
-          if (tableNum === 4) table2El[l].style.backgroundColor = "#5f3dc4";
-          if (tableNum === 3) table2El[l].style.backgroundColor = "#7048e8";
-          if (tableNum === 2) table2El[l].style.backgroundColor = "#845ef7";
-          if (tableNum === 1) table2El[l].style.backgroundColor = "#b197fc";
-          activeTableTd.appendChild(table2El[l]);
-        }
-      }
-    }
-  }
-};
-
 const tableRowCreate = function () {
-  let tbody, trEl;
+  let tbody, trEl, initialMinute, minutes, hours;
 
   for (let j = 1; j <= 4; j++) {
     tbody = document.querySelector(`.tbody-${j}`);
+    initialMinute = 8 * 60 + 30;
 
     for (let i = 1; i <= 10; i++) {
+      let minutes = initialMinute % 60;
+      let hours = Math.trunc(initialMinute / 60);
+
       trEl = document.createElement("tr");
       trEl.innerHTML +=
         "<tr>" +
         "<td class= " +
         `table-${j}-row-${i}-column-1` +
-        "  ondrop='birak(event)' ondragover='return false' >09:20</td>" +
+        "  ondrop='birak(event)' ondragover='return false' >" +
+        `${hours}:${minutes === 0 ? "00" : minutes}` +
+        "</td>" +
         "<td class= " +
         `table-${j}-row-${i}-column-2` +
         "  ondrop='birak(event)' ondragover='return false' ></td>" +
@@ -94,12 +57,71 @@ const tableRowCreate = function () {
         "  ondrop='birak(event)' ondragover='return false' ></td>" +
         "</tr>";
       tbody.appendChild(trEl);
+
+      initialMinute += 50;
     }
   }
   1;
 };
 
 tableRowCreate();
+
+const bringLectures = function (tableNum) {
+  let table2El, activeTableTd, k, activeTableNum;
+
+  //create array for the json data
+  const table2Elements = [];
+
+  for (k = 1; k <= 4; k++) {
+    const table = document.querySelector(`.table-${k}`);
+
+    if (!table.classList.contains("hidden")) {
+      activeTableNum = k;
+      console.log("active", k);
+    }
+  }
+
+  for (let j = 1; j <= 10; j++) {
+    for (let f = 1; f <= 6; f++) {
+      // obtain the childnodes of the table via parameter
+      table2El = document.querySelector(
+        `.table-${tableNum}-row-${j}-column-${f}`
+      ).childNodes;
+
+      //obtain the td areas of the active table
+      activeTableTd = document.querySelector(
+        `.table-${activeTableNum}-row-${j}-column-${f}`
+      );
+
+      //add elements from second table to the active table
+
+      if (table2El.length !== 0 && f !== 1 && activeTableNum !== tableNum) {
+        for (let t = 0; t < table2El.length; t++) {
+          const clone = table2El[t].cloneNode(true);
+          clone.id = `clone-${table2El[t].id}`;
+          activeTableTd.appendChild(clone);
+          // `clone-table${activeTableNum}-row${j}-col${f}`
+
+          //setTimeout(() => {
+          //   if (tableNum === 4)
+          //     document.getElementById(
+          //       `clone-table${tableNum}-row${j}-col${f}`
+          //     ).style.backgroundColor = "#5f3dc4";
+          //   if (tableNum === 3)
+          //     document.getElementById(
+          //       `clone-table${tableNum}-row${j}-col${f}`
+          //     ).style.backgroundColor = "#7048e8";
+          //   if (tableNum === 2)
+          //     document.getElementById(
+          //       `clone-table${tableNum}-row${j}-col${f}`
+          //     ).style.backgroundColor = "#845ef7";
+          // }, 200);
+        }
+      }
+    }
+  }
+};
+
 //closing the modal
 const closeModal = function () {
   modal.classList.add("hidden");
@@ -195,19 +217,30 @@ modalBtnSubmit.addEventListener("click", function () {
   const sessionVal = document.querySelector(".session:checked").value;
   const gradeVal = document.querySelector(".student-grade:checked").value;
 
-  id = id + 1;
-
   //div features
   div.style.width = "200px";
   div.style.height = "60px";
   div.style.padding = "8px 4px";
-  div.style.background = "#b197fc";
+
+  if (gradeVal === "1st") {
+    div.style.background = "#d0bfff";
+  }
+  if (gradeVal === "2st") {
+    div.style.background = "#9775fa";
+  }
+  if (gradeVal === "3st") {
+    div.style.background = "#7048e8";
+  }
+  if (gradeVal === "4st") {
+    div.style.background = "#5f3dc4";
+  }
+
   div.style.color = "#f1f3f5";
   div.style.borderRadius = "6px";
   div.style.marginTop = "12px";
-  div.style.display = "flex";
+  div.style.marginbottom = "12px";
+  div.style.display = "inline-block";
   div.style.textAlign = "center";
-  div.style.justifyContent = "center";
   div.style.fontWeight = 700;
   div.style.fontSize = "16px";
   div.style.draggable = "true";
@@ -216,6 +249,8 @@ modalBtnSubmit.addEventListener("click", function () {
   div.setAttribute("id", id);
   div.setAttribute("draggable", "true");
   div.setAttribute("ondragstart", "surukle(event)");
+
+  id = id + 1;
 
   div.innerHTML =
     lectureNameVal +

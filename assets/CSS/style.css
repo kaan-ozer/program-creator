@@ -240,9 +240,17 @@ table tbody tr:last-child td:last-child {
   box-shadow: 4px 4px 20px 0px rgba(99, 230, 191, 0.1);
 }
 
-.btn-header-nav:hover,
+.btn-header-nav:hover {
+  color: #ced4da;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
 .btn-header-nav:active {
   color: #ced4da;
+  background-color: #5f3dc4;
   text-decoration: none;
   font-weight: bold;
   font-size: 16px;
@@ -263,9 +271,12 @@ table tbody tr:last-child td:last-child {
   font-size: 16px;
   text-transform: uppercase;
 }
-.btn-side-nav:hover,
-.btn-side-nav:active {
+.btn-side-nav:hover {
   color: #ced4da;
+}
+
+.btn-side-nav:active {
+  color: #5f3dc4;
 }
 
 /* ICON */
@@ -378,6 +389,11 @@ aside nav a {
   color: #fff;
 }
 
+.modal-btn-submit:active,
+.close-modal-btn:active {
+  background-color: #5f3dc4;
+}
+
 .lecture-divs {
   overflow-y: scroll;
   height: 542px;
@@ -387,6 +403,8 @@ aside nav a {
   justify-items: center;
   flex-direction: column;
 }
+
+/* SCROLLBAR */
 
 /* width */
 ::-webkit-scrollbar {
