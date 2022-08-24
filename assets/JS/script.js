@@ -237,11 +237,10 @@ modalBtnSubmit.addEventListener("click", function () {
   const lectureNameVal = document.querySelector(".lecture-name").value;
   const lecturerNameVal = document.querySelector(".lecturer-name").value;
   const gradeVal = document.querySelector(".student-grade:checked").value;
+  const sectionVal = document.querySelector(".section-input").value;
   const mandatoryOptionalVal = document.querySelector(
     ".lec-status:checked"
   ).value;
-
-  // const sessionVal = document.querySelector(".session:checked").value;
 
   //div features--------------------------------------
   div.style.width = "200px";
@@ -284,7 +283,7 @@ modalBtnSubmit.addEventListener("click", function () {
     "-" +
     lecturerNameVal +
     "[" +
-    sessionVal +
+    sectionVal +
     "] -" +
     gradeVal +
     "- (" +
