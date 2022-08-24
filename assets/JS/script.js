@@ -13,11 +13,15 @@ const btnFreshman = document.querySelector(".btn--freshman");
 const btnSophomore = document.querySelector(".btn--sophomore");
 const btnJunior = document.querySelector(".btn--junior");
 const btnSenior = document.querySelector(".btn--senior");
+const btnReset = document.querySelector(".btn--reset");
 const modalBtnSubmit = document.querySelector(".modal-btn-submit");
 const lectureDivs = document.querySelector(".lecture-divs");
 const carousel = document.querySelector(".carousel");
 let id = 1;
-let hourStart = 7;
+let isFreshmanActive = true,
+  isSophomoreActive = true,
+  isJuniorActive = true,
+  isSeniorActive = true;
 
 // FUNCTIONS *******************************************************
 
@@ -99,6 +103,7 @@ const bringLectures = function (tableNum) {
         for (let t = 0; t < table2El.length; t++) {
           const clone = table2El[t].cloneNode(true);
           clone.id = `clone-${table2El[t].id}`;
+          clone.setAttribute("class", "clone");
           activeTableTd.appendChild(clone);
           // `clone-table${activeTableNum}-row${j}-col${f}`
 
@@ -286,17 +291,42 @@ function del(o) {
 }
 
 btnFreshman.addEventListener("click", function () {
-  bringLectures(1);
+  if (isFreshmanActive) {
+    bringLectures(1);
+    isFreshmanActive = false;
+  }
 });
 
 btnSophomore.addEventListener("click", function () {
-  bringLectures(2);
+  if (isSophomoreActive) {
+    bringLectures(2);
+    isSophomoreActive = false;
+  }
 });
 
 btnJunior.addEventListener("click", function () {
-  bringLectures(3);
+  if (isJuniorActive) {
+    bringLectures(3);
+    isJuniorActive = false;
+  }
 });
 
 btnSenior.addEventListener("click", function () {
-  bringLectures(4);
+  if (isSeniorActive) {
+    bringLectures(4);
+    isSeniorActive = false;
+  }
+});
+
+btnReset.addEventListener("click", function () {
+  for (let i = 0; i < 60; i++) {
+    if (document.getElementById(`clone-${i}`) !== null) {
+      document.getElementById(`clone-${i}`).remove();
+    }
+  }
+
+  isFreshmanActive = true;
+  isSophomoreActive = true;
+  isJuniorActive = true;
+  isSeniorActive = true;
 });
