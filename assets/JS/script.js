@@ -3,6 +3,8 @@
 /*
 COLORS *******************************************************
 
+They are moved to css file
+
 1: #0b7285
 2: #5f3dc4
 3: #a61e4d
@@ -10,28 +12,33 @@ COLORS *******************************************************
 
 */
 
-let colorFreshman = "#0b7285";
-let colorSophomore = "#5f3dc4";
-let colorJunior = "#a61e4d";
-let colorSenior = "#fd7e14";
-
 // ELEMENTS *******************************************************
 
+//elements on aside
 const btnAdd = document.querySelector(".btn-add");
 const btnDel = document.querySelector(".btn-del");
-const modal = document.querySelector(".modal");
+const lectureDivs = document.querySelector(".lecture-divs");
+//modals
 const overlay = document.querySelector(".overlay");
-const closeModalBtn = document.querySelector(".close-modal-btn");
-const carouselBtnRight = document.querySelector(".carousel-btn-right");
-const carouselBtnLeft = document.querySelector(".carousel-btn-left");
+//modal for lec
+const modalLec = document.querySelector(".lec-modal");
+const modalLecClose = document.querySelector(".lec-modal-close");
+const modalBtnSubmit = document.querySelector(".modal-btn-submit");
+//modal for json
+const modalJSON = document.querySelector(".json-modal");
+const modalJSONbtnClose = document.querySelector(".json-modal-close");
+//header button elements
 const btnFreshman = document.querySelector(".btn--freshman");
 const btnSophomore = document.querySelector(".btn--sophomore");
 const btnJunior = document.querySelector(".btn--junior");
 const btnSenior = document.querySelector(".btn--senior");
 const btnReset = document.querySelector(".btn--reset");
-const modalBtnSubmit = document.querySelector(".modal-btn-submit");
-const lectureDivs = document.querySelector(".lecture-divs");
+const btnJSON = document.querySelector(".btn--json");
+const btnSave = document.querySelector(".btn--save");
+//carousel buttons
 const carousel = document.querySelector(".carousel");
+const carouselBtnRight = document.querySelector(".carousel-btn-right");
+const carouselBtnLeft = document.querySelector(".carousel-btn-left");
 
 // HEADER BUTTON ACTIVITY***************************************************************
 
@@ -41,6 +48,11 @@ let isFreshmanActive = true,
   isJuniorActive = true,
   isSeniorActive = true;
 
+btnFreshman.style.boxShadow = "4px 4px 12px 0px purple";
+btnSophomore.style.boxShadow = "4px 4px 12px 0px purple";
+btnJunior.style.boxShadow = "4px 4px 12px 0px purple";
+btnSenior.style.boxShadow = "4px 4px 12px 0px purple";
+
 // TABLE SETTINGS*********************************************************************
 
 //YOU CAN ADJUST THE NUMBER OF TABLE (BUT WE HAVE 4 NOW)
@@ -48,9 +60,44 @@ let NumberOfTable = 4;
 //YOU CAN ADJUST THE NUMBER OF THE ROWS
 let NumberOfRow = 10;
 
-let id = 1;
+let id;
 
 // FUNCTIONS *******************************************************
+
+const ID = function () {
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return "_" + Math.random().toString(36).substr(2, 9);
+};
+
+function uploadFiles() {
+  var file_to_read = document.getElementById("file_upload").files[0];
+  var fileread = new FileReader();
+  fileread.onload = function (e) {
+    var content = e.target.result;
+    console.log(content);
+    var intern = JSON.parse(content); // Array of Objects.
+    // console.log(intern); // You can index every object
+
+    for (let i = 0; i < intern.length; i++) {
+      const div = document.createElement("div");
+      const location = document.querySelector(`${intern[i]["location"]}`);
+
+      div.setAttribute("draggable", "true");
+      div.setAttribute("ondragstart", "surukle(event)");
+      div.setAttribute("id", intern[i]["id"]);
+      div.setAttribute(
+        "class",
+        intern[i]["class"][0] + " " + intern[i]["class"][1]
+      );
+      div.innerHTML = intern[i]["content"];
+
+      location.appendChild(div);
+    }
+  };
+  fileread.readAsText(file_to_read);
+}
 
 //CREATING ROWS FOR TABLES
 const tableRowCreate = function () {
@@ -143,8 +190,11 @@ const bringLectures = function (tableNum) {
       ) {
         for (let t = 0; t < parameterTable.length; t++) {
           const clone = parameterTable[t].cloneNode(true);
-          clone.id = `clone-${parameterTable[t].id}`;
-          clone.setAttribute("class", "clone");
+          clone.id = `clone-of-${parameterTable[t].id}-clone-id-${ID()}`;
+          clone.setAttribute(
+            "class",
+            `clone ${clone.classList[0]} ${clone.classList[1]}`
+          );
           activeTableTd.appendChild(clone);
         }
       }
@@ -153,8 +203,14 @@ const bringLectures = function (tableNum) {
 };
 
 //CLOSE THE MODAL
-const closeModal = function () {
-  modal.classList.add("hidden");
+const closeModalLec = function () {
+  modalLec.classList.add("hidden");
+  overlay.classList.add("hidden");
+};
+
+//CLOSE THE MODAL
+const closeModalJSON = function () {
+  modalJSON.classList.add("hidden");
   overlay.classList.add("hidden");
 };
 
@@ -228,8 +284,29 @@ function del(o) {
 
 // EVENT LİSTENERS  *******************************************************
 
+//if you push the add button which is on modal, modal will be visible
+btnAdd.addEventListener("click", function () {
+  modalLec.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+});
+
+//if you push the close button which is on modal, modal will close
+modalLecClose.addEventListener("click", closeModalLec);
+
+//if you push the environment of  the modal, modal will close
+overlay.addEventListener("click", closeModalLec);
+
+//if you push the any key from the keyboard, modal will close
+document.addEventListener("keydown", function (event) {
+  console.log(event);
+  if (event["key"] === "Escape") closeModalLec();
+});
+
 //  it will create lectures, when you push submit on modal.
 modalBtnSubmit.addEventListener("click", function () {
+  //create unique key
+  id = ID();
+
   //create div
   const div = document.createElement("div");
 
@@ -242,41 +319,26 @@ modalBtnSubmit.addEventListener("click", function () {
     ".lec-status:checked"
   ).value;
 
-  //div features--------------------------------------
-  div.style.width = "200px";
-  div.style.height = "60px";
-  div.style.padding = "8px 4px";
-
-  //div colors
-  if (gradeVal === "1st") {
-    div.style.background = colorFreshman;
-  }
-  if (gradeVal === "2st") {
-    div.style.background = colorSophomore;
-  }
-  if (gradeVal === "3st") {
-    div.style.background = colorJunior;
-  }
-  if (gradeVal === "4st") {
-    div.style.background = colorSenior;
-  }
-
-  div.style.color = "#f1f3f5";
-  div.style.borderRadius = "6px";
-  div.style.marginTop = "12px";
-  div.style.marginbottom = "12px";
-  div.style.display = "inline-block";
-  div.style.textAlign = "center";
-  div.style.fontWeight = 700;
-  div.style.fontSize = "16px";
-  div.style.draggable = "true";
-  div.style.ondragover = "return false;";
-  div.setAttribute("class", `lec`);
+  //Add attributes
   div.setAttribute("id", id);
   div.setAttribute("draggable", "true");
   div.setAttribute("ondragstart", "surukle(event)");
 
-  id = id + 1;
+  //div colors
+  if (gradeVal === "1st") {
+    div.setAttribute("class", `lec lec-for-freshman`);
+  }
+  if (gradeVal === "2st") {
+    div.setAttribute("class", `lec lec-for-sophomore`);
+  }
+  if (gradeVal === "3st") {
+    div.setAttribute("class", `lec lec-for-junior`);
+  }
+  if (gradeVal === "4st") {
+    div.setAttribute("class", `lec lec-for-senior`);
+  }
+
+  id = ID();
 
   div.innerHTML =
     lectureNameVal +
@@ -295,21 +357,21 @@ modalBtnSubmit.addEventListener("click", function () {
 });
 
 //if you push the add button which is on modal, modal will be visible
-btnAdd.addEventListener("click", function () {
-  modal.classList.remove("hidden");
+btnJSON.addEventListener("click", function () {
+  modalJSON.classList.remove("hidden");
   overlay.classList.remove("hidden");
 });
 
 //if you push the close button which is on modal, modal will close
-closeModalBtn.addEventListener("click", closeModal);
+modalJSONbtnClose.addEventListener("click", closeModalJSON);
 
 //if you push the environment of  the modal, modal will close
-overlay.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModalJSON);
 
 //if you push the any key from the keyboard, modal will close
 document.addEventListener("keydown", function (event) {
   console.log(event);
-  if (event["key"] === "Escape") closeModal();
+  if (event["key"] === "Escape") closeModalJSON();
 });
 
 // Change the table on carousel -right-
@@ -327,6 +389,7 @@ btnFreshman.addEventListener("click", function () {
   if (isFreshmanActive) {
     bringLectures(1);
     isFreshmanActive = false;
+    btnFreshman.style.boxShadow = "4px 4px 12px 0px red";
   }
 });
 
@@ -335,6 +398,7 @@ btnSophomore.addEventListener("click", function () {
   if (isSophomoreActive) {
     bringLectures(2);
     isSophomoreActive = false;
+    btnSophomore.style.boxShadow = "4px 4px 12px 0px red";
   }
 });
 
@@ -343,6 +407,7 @@ btnJunior.addEventListener("click", function () {
   if (isJuniorActive) {
     bringLectures(3);
     isJuniorActive = false;
+    btnJunior.style.boxShadow = "4px 4px 12px 0px red";
   }
 });
 
@@ -351,19 +416,70 @@ btnSenior.addEventListener("click", function () {
   if (isSeniorActive) {
     bringLectures(4);
     isSeniorActive = false;
+    btnSenior.style.boxShadow = "4px 4px 12px 0px red";
   }
 });
 
 //IT WILL CLEAR THE ALL CLONES (clear button on header)
 btnReset.addEventListener("click", function () {
-  for (let i = 0; i < 60; i++) {
-    if (document.getElementById(`clone-${i}`) !== null) {
-      document.getElementById(`clone-${i}`).remove();
-    }
-  }
+  const cloneArray = document.querySelectorAll(`.clone`);
+
+  if (cloneArray[0] !== undefined) cloneArray[0].remove();
+  if (cloneArray[1] !== undefined) cloneArray[1].remove();
+  if (cloneArray[2] !== undefined) cloneArray[2].remove();
+  if (cloneArray[3] !== undefined) cloneArray[3].remove();
 
   isFreshmanActive = true;
+  btnFreshman.style.boxShadow = "4px 4px 12px 0px purple";
   isSophomoreActive = true;
+  btnSophomore.style.boxShadow = "4px 4px 12px 0px purple";
   isJuniorActive = true;
+  btnJunior.style.boxShadow = "4px 4px 12px 0px purple";
   isSeniorActive = true;
+  btnSenior.style.boxShadow = "4px 4px 12px 0px purple";
+});
+
+// JSON
+
+btnSave.addEventListener("click", function () {
+  let currentTable;
+  const array = [];
+
+  //check all tables on carouse
+  for (let c = 1; c <= 4; c++)
+    for (let b = 1; b <= NumberOfRow; b++) {
+      for (let a = 1; a <= 6; a++) {
+        currentTable = document.querySelector(
+          `.table-${c}-row-${b}-column-${a}`
+        ).childNodes;
+
+        //get the location
+        const location = `.table-${c}-row-${b}-column-${a}`;
+
+        for (let t = 0; t < currentTable.length; t++) {
+          const clone = currentTable[t].cloneNode(true);
+
+          if (clone.id !== undefined) {
+            const object = {
+              id: clone.id,
+              class: clone.classList,
+              content: clone.textContent,
+              location: location,
+            };
+
+            array.push(object);
+          }
+        }
+      }
+    }
+
+  console.log(array);
+
+  //convert objects into json format
+  var data =
+    "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(array));
+
+  btnSave.href = "data:" + data;
+  btnSave.download = "data.json";
+  btnSave.innerHTML = "file is succesfully downloaded";
 });

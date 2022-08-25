@@ -225,12 +225,39 @@ table tbody tr:last-child td:last-child {
 
 /* BUTTON */
 
+.json-modal .btn--save:link,
+.json-modal .btn--save:visited {
+  border: 2px solid rgba(176, 151, 252, 0.4);
+  display: inline-block;
+  border-radius: 12px;
+  width: 150px;
+  padding: 8px;
+  background-color: #f1f1f1;
+  color: #5f3dc4;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-right: 8px;
+  margin-left: 45px;
+  box-shadow: 4px 4px 20px 0px rgba(99, 230, 191, 0.1);
+  font-weight: 700;
+  text-align: center;
+}
+.json-modal .btn--save:active {
+  background-color: #5f3dc4;
+}
+.json-modal .btn--save:hover {
+  cursor: pointer;
+  background-color: #b197fc;
+  color: #f1f1f1;
+}
+
 .btn-header-nav:link,
 .btn-header-nav:visited {
   border-radius: 12px;
   width: 80px;
   padding: 8px;
-
   background-color: #b197fc;
   color: #495057;
   text-decoration: none;
@@ -263,9 +290,7 @@ table tbody tr:last-child td:last-child {
   width: 80px;
   padding: 5px;
   /* margin-left: 10px; */
-
   border-radius: 6px;
-
   color: #b197fc;
   text-decoration: none;
   font-weight: bold;
@@ -317,6 +342,7 @@ aside nav a {
   transform: translate(-50%, -50%);
   z-index: 2;
 }
+
 .overlay {
   position: absolute;
   left: 0px;
@@ -355,6 +381,64 @@ aside nav a {
   font-weight: 500;
   font-size: 18px;
   line-height: 1.3;
+}
+
+.json-modal .json-modal-text {
+  font-size: 24px;
+  line-height: 1.1;
+  letter-spacing: -0.6px;
+  margin-bottom: 42px;
+  margin-top: 32px;
+}
+
+.download-icon {
+  position: absolute;
+  width: 40px;
+  color: #5f3dc4;
+  top: 30px;
+  left: 110px;
+}
+
+.upload-container {
+  position: relative;
+  border: 1px solid #b197fc;
+  background: #f1f1f1;
+  width: 250px;
+}
+
+.upload-container input {
+  outline: 2px dashed #b197fc;
+  outline-offset: -10px;
+  padding: 90px 50px 90px 50px;
+  text-align: center !important;
+  width: 250px;
+}
+
+.upload-container input:hover {
+  background: #ddd;
+}
+
+.upload-container:before {
+  position: absolute;
+  bottom: 50px;
+  left: 42px;
+  font-size: 12px;
+  content: " (or) Drag and Drop files here. ";
+  color: #5f3dc4;
+  font-weight: 700;
+}
+.upload-btn {
+  margin-left: 75px;
+  padding: 7px 20px;
+  color: #5f3dc4;
+  font-weight: 700;
+  border: 2px solid rgba(176, 151, 252, 0.4);
+  border-radius: 12px;
+}
+.upload-btn:hover {
+  cursor: pointer;
+  background-color: #b197fc;
+  color: #f1f1f1;
 }
 
 .modal-questions {
@@ -425,4 +509,41 @@ aside nav a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #212529;
+}
+
+/* lectures */
+
+.lec {
+  width: 200px;
+  height: 60px;
+  padding: 8px 4px;
+  color: #f1f3f5;
+  border-radius: 6px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  display: inline-block;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/*
+--------------- COLORS-----------------
+ colorFreshman = "#0b7285";
+ colorSophomore = "#5f3dc4";
+ colorJunior = "#a61e4d";
+ colorSenior = "#fd7e14"; 
+ */
+
+.lec-for-freshman {
+  background-color: #0b7285;
+}
+.lec-for-sophomore {
+  background-color: #5f3dc4;
+}
+.lec-for-junior {
+  background-color: #a61e4d;
+}
+.lec-for-senior {
+  background-color: #fd7e14;
 }
